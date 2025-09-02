@@ -59,6 +59,18 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install
 
+      - name: Debug icon files (Windows)
+        if: matrix.settings.platform == 'windows-latest'
+        run: |
+          dir src-tauri\icons\
+          if exist "src-tauri\icons\icon.ico" (echo ICO file exists) else (echo ICO file missing!)
+
+      - name: Debug icon files (macOS)
+        if: matrix.settings.platform == 'macos-latest'
+        run: |
+          ls -la src-tauri/icons/
+          test -f src-tauri/icons/icon.ico && echo "ICO file exists" || echo "ICO file missing!"
+
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
         env:
