@@ -1,6 +1,17 @@
 # Better Log Viewer
 
+[![Build](https://github.com/huangkairan/better-log-viewer/workflows/Build/badge.svg)](https://github.com/huangkairan/better-log-viewer/actions)
+[![Release](https://github.com/huangkairan/better-log-viewer/workflows/Release/badge.svg)](https://github.com/huangkairan/better-log-viewer/actions)
+[![GitHub release](https://img.shields.io/github/release/huangkairan/better-log-viewer.svg)](https://github.com/huangkairan/better-log-viewer/releases)
+
 一个基于 Rust + Tauri 的桌面端日志查看工具，专门用于查看和分析包含 ANSI 转义序列的日志文件。
+
+## 📥 下载安装
+
+从 [Releases 页面](https://github.com/huangkairan/better-log-viewer/releases) 下载适合你系统的安装包：
+
+- **macOS**: `Better-Log-Viewer_x.x.x_aarch64.dmg` (Apple Silicon) 或 `Better-Log-Viewer_x.x.x_x64.dmg` (Intel)
+- **Windows**: `Better-Log-Viewer_x.x.x_x64-setup.exe`
 
 ## 功能特性
 
@@ -52,29 +63,34 @@ pnpm tauri dev
 
 ## 构建发布
 
-### 构建应用
+### 本地构建
 
 ```bash
 pnpm tauri build
 ```
 
-构建完成后，可执行文件将生成在 `src-tauri/target/release/bundle/` 目录下：
+构建完成后，可执行文件将生成在 `src-tauri/target/release/bundle/` 目录下。
 
-- **macOS**: `bundle/macos/Better Log Viewer.app`
-- **Windows**: `bundle/msi/` 或 `bundle/nsis/` 目录下的安装程序
-- **Linux**: `bundle/deb/` 或 `bundle/appimage/` 目录下的安装包
+### 版本发布
 
-### 直接运行可执行文件
+项目使用 GitHub Actions 自动构建多平台版本：
 
-如果只需要可执行文件而不需要安装包：
-
+1. **创建新版本**:
 ```bash
-cargo build --release --manifest-path src-tauri/Cargo.toml
+./scripts/release.sh
 ```
 
-可执行文件位置：
-- **macOS/Linux**: `src-tauri/target/release/better-log-viewer`
-- **Windows**: `src-tauri/target/release/better-log-viewer.exe`
+2. **推送标签触发自动构建**:
+```bash
+git push origin main && git push origin v1.0.0
+```
+
+3. **自动构建**: GitHub Actions 将自动构建 macOS 和 Windows 版本
+4. **自动发布**: 构建完成后自动创建 GitHub Release
+
+### 手动触发构建
+
+也可以在 GitHub Actions 页面手动触发 "Build" 工作流进行测试构建。
 
 ## 使用说明
 
