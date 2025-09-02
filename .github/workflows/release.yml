@@ -61,9 +61,10 @@ jobs:
 
       - name: Debug icon files (Windows)
         if: matrix.settings.platform == 'windows-latest'
+        shell: powershell
         run: |
-          dir src-tauri\icons\
-          if exist "src-tauri\icons\icon.ico" (echo ICO file exists) else (echo ICO file missing!)
+          Get-ChildItem src-tauri/icons/
+          if (Test-Path "src-tauri/icons/icon.ico") { Write-Host "ICO file exists" } else { Write-Host "ICO file missing!" }
 
       - name: Debug icon files (macOS)
         if: matrix.settings.platform == 'macos-latest'
