@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Better Log Viewer</title>
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 顶部工具栏 -->
+        <header class="toolbar">
+            <div class="toolbar-left">
+                <button id="openFile" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Open File
+                </button>
+                <button id="toggleHistory" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    History
+                </button>
+            </div>
+            
+            <div class="toolbar-center">
+                <input type="text" id="searchInput" placeholder="Search logs..." class="search-input">
+            </div>
+            
+            <div class="toolbar-right">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <input type="checkbox" value="ERROR" checked> ERROR
+                    </label>
+                    <label class="filter-label">
+                        <input type="checkbox" value="WARN" checked> WARN
+                    </label>
+                    <label class="filter-label">
+                        <input type="checkbox" value="INFO" checked> INFO
+                    </label>
+                    <label class="filter-label">
+                        <input type="checkbox" value="DEBUG" checked> DEBUG
+                    </label>
+                </div>
+                <button id="toggleTheme" class="btn btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+        
+        <!-- 侧边栏 - 历史记录 -->
+        <aside id="historyPanel" class="history-panel hidden">
+            <div class="panel-header">
+                <h3>Recent Files</h3>
+                <button id="closeHistory" class="btn-close">×</button>
+            </div>
+            <div id="historyList" class="history-list"></div>
+        </aside>
+        
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 拖拽区域 -->
+            <div id="dropZone" class="drop-zone">
+                <div class="drop-zone-content">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" opacity="0.5">
+                        <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                    </svg>
+                    <p>Drag & drop log files here</p>
+                    <p class="text-muted">or click "Open File" to browse</p>
+                </div>
+            </div>
+            
+            <!-- 日志内容区 -->
+            <div id="logContainer" class="log-container hidden">
+                <!-- 统计信息 -->
+                <div id="logStats" class="log-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total:</span>
+                        <span id="statTotal" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item error">
+                        <span class="stat-label">Errors:</span>
+                        <span id="statError" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item warn">
+                        <span class="stat-label">Warnings:</span>
+                        <span id="statWarn" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item info">
+                        <span class="stat-label">Info:</span>
+                        <span id="statInfo" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item debug">
+                        <span class="stat-label">Debug:</span>
+                        <span id="statDebug" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <!-- 日志列表 -->
+                <div id="logList" class="log-list"></div>
+            </div>
+        </main>
+        
+        <!-- 加载指示器 -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading log file...</p>
+        </div>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
